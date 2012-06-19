@@ -1,5 +1,5 @@
 package org.hettoo.vui;
 
-public interface VDrawable extends VComponent {
+public interface VDrawer extends VComponent {
     public void drawRectangle(VRectangle rectangle);
 }

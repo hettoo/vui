@@ -3,11 +3,12 @@ package org.hettoo.vui;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
-public class VCanvas implements VDrawable {
+public class VCanvas extends VAbstractComponent implements VDrawer {
     private Size virtualSize;
     private Size actualSize;
 
     public VCanvas(Size virtualSize) {
+        super();
         this.virtualSize = virtualSize;
     }
 
@@ -18,6 +19,6 @@ public class VCanvas implements VDrawable {
     public void drawRectangle(VRectangle rectangle) {
     }
 
-    public void draw(VDrawable parent) {
+    public void draw() {
     }
 }

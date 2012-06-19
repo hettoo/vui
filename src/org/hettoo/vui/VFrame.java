@@ -16,7 +16,7 @@ import java.util.Observer;
 import java.util.Observable;
 
 public class VFrame {
-    private static final Color ROOT_COLOR = new Color(0.72f, 0.66f, 0.5f, 1);
+    private static final Color ROOT_COLOR = new Color(0.2f, 0.12f, 0.04f, 1);
 
     private JFrame jFrame;
     private VFrameCanvas canvas;
@@ -41,7 +41,6 @@ public class VFrame {
     public void show() {
         jFrame.setVisible(true);
         jFrame.setLocationRelativeTo(null);
-        while (!jFrame.isVisible());
         draw();
     }
 
@@ -79,6 +78,7 @@ public class VFrame {
 
         public void setComponent(VComponent component) {
             this.component = component;
+            component.setParent(this);
         }
 
         @Override
@@ -92,16 +92,12 @@ public class VFrame {
         }
 
         @Override
-        public void draw(VDrawable parent) {
+        public void draw() {
             drawRectangle(new VRectangle(new Rectangle(0, 0, canvas.getWidth(),
                             canvas.getHeight()), ROOT_COLOR));
-            super.draw(parent);
+            super.draw();
             if (component != null)
-                component.draw(parent);
-        }
-
-        public void draw() {
-            draw(this);
+                component.draw();
             strategy.show();
         }
     }
