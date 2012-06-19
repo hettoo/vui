@@ -13,7 +13,11 @@ public class VSubCanvas implements VDrawable {
         this.limit = limit;
     }
 
-    public void draw(VSubCanvas parent) {
+    public void drawRectangle(VRectangle rectangle) {
+        canvas.drawRectangle(rectangle);
+    }
+
+    public void draw(VDrawable parent) {
         canvas.draw(parent);
     }
 }

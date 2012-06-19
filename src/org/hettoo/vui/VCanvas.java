@@ -4,18 +4,20 @@ import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
 public class VCanvas implements VDrawable {
-    private Rectangle virtualRectangle;
-    private Rectangle virtualLimit;
-    private Rectangle actualRectangle;
+    private Size virtualSize;
+    private Size actualSize;
 
-    public VCanvas(Rectangle virtualRectangle) {
-        this.virtualRectangle = virtualRectangle;
+    public VCanvas(Size virtualSize) {
+        this.virtualSize = virtualSize;
     }
 
-    public void setActualRectangle(Rectangle actualRectangle) {
-        this.actualRectangle = actualRectangle;
+    public void setActualSize(Size actualSize) {
+        this.actualSize = actualSize;
     }
 
-    public void draw(VSubCanvas parent) {
+    public void drawRectangle(VRectangle rectangle) {
+    }
+
+    public void draw(VDrawable parent) {
     }
 }

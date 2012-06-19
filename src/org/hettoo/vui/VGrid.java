@@ -1,6 +1,9 @@
 package org.hettoo.vui;
 
 public class VGrid implements VComponent {
-    public void draw(VSubCanvas parent) {
+    public VGrid(int cols, int rows) {
+    }
+
+    public void draw(VDrawable parent) {
     }
 }
