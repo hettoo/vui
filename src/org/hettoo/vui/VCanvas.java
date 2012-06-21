@@ -4,21 +4,23 @@ import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
 public class VCanvas extends VAbstractComponent implements VDrawer {
-    private Size virtualSize;
-    private Size actualSize;
+    private Size size;
 
-    public VCanvas(Size virtualSize) {
+    public VCanvas() {
         super();
-        this.virtualSize = virtualSize;
     }
 
-    public void setActualSize(Size actualSize) {
-        this.actualSize = actualSize;
+    public void setSize(Size size) {
+        this.size = size;
     }
 
     public void drawRectangle(VRectangle rectangle) {
     }
 
     public void draw() {
+    }
+
+    public Size getSize() {
+        return size;
     }
 }

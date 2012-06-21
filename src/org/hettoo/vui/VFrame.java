@@ -5,7 +5,6 @@ import java.awt.image.BufferStrategy;
 import java.awt.Canvas;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -16,7 +15,7 @@ import java.util.Observer;
 import java.util.Observable;
 
 public class VFrame {
-    private static final Color ROOT_COLOR = new Color(0.2f, 0.12f, 0.04f, 1);
+    private static final Color ROOT_COLOR = new Color(0.05f, 0.03f, 0.01f, 1);
 
     private JFrame jFrame;
     private VFrameCanvas canvas;
@@ -36,12 +35,17 @@ public class VFrame {
         KeyListener keyListener = new KeyTransformer();
         canvas = new VFrameCanvas(panel, keyListener);
         jFrame.addKeyListener(keyListener);
+        jFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent event) {
+                draw();
+            }
+        });
     }
 
     public void show() {
-        jFrame.setVisible(true);
         jFrame.setLocationRelativeTo(null);
-        draw();
+        jFrame.setVisible(true);
     }
 
     private class VFrameCanvas extends VCanvas {
@@ -54,11 +58,11 @@ public class VFrame {
         private Graphics graphics;
 
         public VFrameCanvas(JPanel panel, KeyListener keyListener) {
-            super(new Size(1, 1));
+            super();
             this.panel = panel;
             canvas = new Canvas();
             canvas.addKeyListener(keyListener);
-            setActualSize(new Size(panel.getWidth(), panel.getHeight()));
+            setSize(new Size(panel.getWidth(), panel.getHeight()));
             panel.add(canvas);
 
             canvas.setIgnoreRepaint(true);
@@ -67,13 +71,11 @@ public class VFrame {
             graphics = strategy.getDrawGraphics();
         }
 
-        @Override
-        public void setActualSize(Size actualSize) {
-            super.setActualSize(actualSize);
-            panel.setPreferredSize(new java.awt.Dimension(actualSize.getWidth(),
-                        actualSize.getHeight()));
-            canvas.setBounds(0, 0, actualSize.getWidth(),
-                    actualSize.getHeight());
+        public void setSize(Size size) {
+            super.setSize(size);
+            panel.setPreferredSize(new java.awt.Dimension(size.getWidth(),
+                        size.getHeight()));
+            canvas.setBounds(0, 0, size.getWidth(), size.getHeight());
         }
 
         public void setComponent(VComponent component) {

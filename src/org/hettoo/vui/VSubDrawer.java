@@ -2,15 +2,13 @@ package org.hettoo.vui;
 
 public class VSubDrawer implements VDrawer {
     private VDrawer drawer;
+    private Size grid;
     private Rectangle limit;
 
-    public VSubDrawer(VDrawer drawer, Rectangle limit) {
+    public VSubDrawer(VDrawer drawer, Size grid, Rectangle limit) {
         this.drawer = drawer;
+        this.grid = grid;
         this.limit = limit;
-    }
-
-    public VSubDrawer(VDrawer drawer) {
-        this(drawer, null);
     }
 
     public void drawRectangle(VRectangle rectangle) {
@@ -27,5 +25,9 @@ public class VSubDrawer implements VDrawer {
 
     public void setParent(VDrawer parent) {
         drawer.setParent(parent);
+    }
+
+    public Size getSize() {
+        return drawer.getSize().limit(grid, limit.getSize());
     }
 }

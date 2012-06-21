@@ -16,4 +16,9 @@ public class Size {
     public int getHeight() {
         return height;
     }
+
+    public Size limit(Size grid, Size limit) {
+        return new Size(width * limit.getWidth() / grid.getWidth(),
+                height * limit.getHeight() / grid.getHeight());
+    }
 }

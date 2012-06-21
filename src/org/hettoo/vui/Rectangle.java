@@ -28,4 +28,8 @@ public class Rectangle {
     public int getHeight() {
         return height;
     }
+
+    public Size getSize() {
+        return new Size(Math.abs(width - x), Math.abs(height - y));
+    }
 }
