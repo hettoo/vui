@@ -1,8 +1,12 @@
 package org.hettoo.vui;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.Canvas;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.RenderingHints;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -77,6 +81,10 @@ public class VFrame {
             canvas.createBufferStrategy(2);
             strategy = canvas.getBufferStrategy();
             graphics = strategy.getDrawGraphics();
+
+            ((Graphics2D)graphics).setRenderingHint(
+                RenderingHints.KEY_TEXT_ANTIALIASING,
+                    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         }
 
         @Override
@@ -98,16 +106,51 @@ public class VFrame {
             return theme;
         }
 
-        @Override
-        public void drawRectangle(VRectangle rectangle) {
-            Color color = rectangle.getColor();
+        private void setColor(Color color) {
             graphics.setColor(new java.awt.Color(color.getRed(),
                         color.getGreen(), color.getBlue(), color.getAlpha()));
+        }
+
+        @Override
+        public int getTextWidth(String text, int size, FontStyle fontStyle) {
+            return graphics.getFontMetrics(new Font("Monospaced",
+                        convertFontStyle(fontStyle.getType()),
+                        size)).stringWidth(text);
+        }
+
+        @Override
+        public int getTextHeight(int size, FontStyle fontStyle) {
+            return graphics.getFontMetrics(new Font("Monospaced",
+                        convertFontStyle(fontStyle.getType()),
+                        size)).getHeight();
+        }
+
+        @Override
+        public void drawRectangle(VRectangle rectangle) {
+            setColor(rectangle.getColor());
             Rectangle rect = rectangle.getRectangle();
             Size offset = rect.getOffset();
             Size size = rect.getSize();
             graphics.fillRect(offset.getWidth(), offset.getHeight(),
                     size.getWidth(), size.getHeight());
+        }
+
+        private int convertFontStyle(FontType style) {
+            switch (style) {
+                case BOLD:
+                    return Font.BOLD;
+            }
+            return Font.PLAIN;
+        }
+
+        @Override
+        public void drawText(String text, int size, Size position,
+                FontStyle fontStyle) {
+            setColor(fontStyle.getColor());
+            graphics.setFont(new Font("Monospaced",
+                        convertFontStyle(fontStyle.getType()), size));
+            graphics.drawString(text, position.getWidth(),
+                    position.getHeight());
         }
 
         @Override
