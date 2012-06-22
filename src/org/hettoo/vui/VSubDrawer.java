@@ -12,11 +12,31 @@ public class VSubDrawer implements VDrawer {
     }
 
     public void drawRectangle(VRectangle rectangle) {
+        Rectangle rect = rectangle.getRectangle();
+        Size offset = rect.getOffset();
+        offset.add(drawer.getSize().limit(grid, limit.getOffset()));
+        rectangle.setRectangle(new Rectangle(offset, rect.getSize()));
         drawer.drawRectangle(rectangle);
     }
 
     public void draw() {
         drawer.draw();
+    }
+
+    public void activate() {
+        drawer.activate();
+    }
+
+    public void disactivate() {
+        drawer.disactivate();
+    }
+
+    public VTheme getTheme() {
+        return drawer.getTheme();
+    }
+
+    public VStatus getStatus() {
+        return drawer.getStatus();
     }
 
     public VDrawer getParent() {

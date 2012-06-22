@@ -17,7 +17,8 @@ public class VCanvas extends VAbstractComponent implements VDrawer {
     public void drawRectangle(VRectangle rectangle) {
     }
 
-    public void draw() {
+    public VTheme getTheme() {
+        return parent.getTheme();
     }
 
     public Size getSize() {

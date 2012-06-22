@@ -1,35 +1,19 @@
 package org.hettoo.vui;
 
 public class Rectangle {
-    private int x;
-    private int y;
-    private int width;
-    private int height;
+    private Size offset;
+    private Size size;
 
-    public Rectangle(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+    public Rectangle(Size offset, Size size) {
+        this.offset = offset;
+        this.size = size;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
+    public Size getOffset() {
+        return offset;
     }
 
     public Size getSize() {
-        return new Size(Math.abs(width - x), Math.abs(height - y));
+        return size;
     }
 }

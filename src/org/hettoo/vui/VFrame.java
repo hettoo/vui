@@ -15,12 +15,14 @@ import java.util.Observer;
 import java.util.Observable;
 
 public class VFrame {
-    private static final Color ROOT_COLOR = new Color(0.05f, 0.03f, 0.01f, 1);
-
     private JFrame jFrame;
     private VFrameCanvas canvas;
 
+    private boolean invisible;
+
     public VFrame(Size size) {
+        invisible = true;
+
         jFrame = new JFrame();
         jFrame.setUndecorated(true);
         jFrame.setResizable(false);
@@ -33,12 +35,15 @@ public class VFrame {
         jFrame.pack();
 
         KeyListener keyListener = new KeyTransformer();
-        canvas = new VFrameCanvas(panel, keyListener);
+        canvas = new VFrameCanvas(new VTheme(), panel, keyListener);
         jFrame.addKeyListener(keyListener);
         jFrame.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowOpened(WindowEvent event) {
-                draw();
+            public void windowActivated(WindowEvent event) {
+                if (invisible) {
+                    draw();
+                    invisible = false;
+                }
             }
         });
     }
@@ -49,6 +54,7 @@ public class VFrame {
     }
 
     private class VFrameCanvas extends VCanvas {
+        private VTheme theme;
         private VComponent component;
 
         private JPanel panel;
@@ -57,8 +63,10 @@ public class VFrame {
         private BufferStrategy strategy;
         private Graphics graphics;
 
-        public VFrameCanvas(JPanel panel, KeyListener keyListener) {
+        public VFrameCanvas(VTheme theme, JPanel panel,
+                KeyListener keyListener) {
             super();
+            this.theme = theme;
             this.panel = panel;
             canvas = new Canvas();
             canvas.addKeyListener(keyListener);
@@ -71,6 +79,7 @@ public class VFrame {
             graphics = strategy.getDrawGraphics();
         }
 
+        @Override
         public void setSize(Size size) {
             super.setSize(size);
             panel.setPreferredSize(new java.awt.Dimension(size.getWidth(),
@@ -81,6 +90,12 @@ public class VFrame {
         public void setComponent(VComponent component) {
             this.component = component;
             component.setParent(this);
+            component.activate();
+        }
+
+        @Override
+        public VTheme getTheme() {
+            return theme;
         }
 
         @Override
@@ -89,15 +104,17 @@ public class VFrame {
             graphics.setColor(new java.awt.Color(color.getRed(),
                         color.getGreen(), color.getBlue(), color.getAlpha()));
             Rectangle rect = rectangle.getRectangle();
-            graphics.fillRect(rect.getX(), rect.getY(), rect.getWidth(),
-                    rect.getHeight());
+            Size offset = rect.getOffset();
+            Size size = rect.getSize();
+            graphics.fillRect(offset.getWidth(), offset.getHeight(),
+                    size.getWidth(), size.getHeight());
         }
 
         @Override
         public void draw() {
-            drawRectangle(new VRectangle(new Rectangle(0, 0, canvas.getWidth(),
-                            canvas.getHeight()), ROOT_COLOR));
-            super.draw();
+            drawRectangle(new VRectangle(new Rectangle(new Size(0, 0),
+                            new Size(canvas.getWidth(), canvas.getHeight())),
+                        theme.getRootColor()));
             if (component != null)
                 component.draw();
             strategy.show();
