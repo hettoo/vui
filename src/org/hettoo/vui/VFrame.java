@@ -22,11 +22,7 @@ public class VFrame {
     private JFrame jFrame;
     private VFrameCanvas canvas;
 
-    private boolean invisible;
-
     public VFrame(Size size) {
-        invisible = true;
-
         jFrame = new JFrame();
         jFrame.setUndecorated(true);
         jFrame.setResizable(false);
@@ -44,10 +40,7 @@ public class VFrame {
         jFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowActivated(WindowEvent event) {
-                if (invisible) {
-                    draw();
-                    invisible = false;
-                }
+                draw();
             }
         });
     }

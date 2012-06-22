@@ -22,16 +22,17 @@ public class VButton extends VAbstractComponent {
                         new Size(CONTENT_MARGIN, CONTENT_MARGIN),
                         new Size(size.getWidth() - CONTENT_MARGIN * 2,
                             size.getHeight() - CONTENT_MARGIN * 2)),
-                    new Color(1, 1, 1)));
+                    new Color(0.94f, 0.94f, 0.72f)));
         if (label != null) {
             FontStyle style = new FontStyle(FontType.PLAIN,
-                    new Color(0, 1, 0));
+                    new Color(0, 0, 0));
             int fontSize = 18;
             int textWidth = parent.getTextWidth(label, fontSize, style);
             int textHeight = parent.getTextHeight(fontSize, style);
             parent.drawText(label, fontSize,
                     new Size((size.getWidth() - textWidth) / 2,
-                        size.getHeight() / 2), style);
+                        size.getHeight() / 2 + textHeight / 5), style);
+            // /5? wtf
         }
     }
 }
