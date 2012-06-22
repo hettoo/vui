@@ -60,4 +60,13 @@ public abstract class VAbstractComponent implements VComponent {
                         new Size(size.getWidth(), STATUS_MARGIN)),
                     getStatusColor()));
     }
+
+    public void keyPressed(KeyPress key) {
+    }
+
+    public void keyReleased(KeyPress key) {
+    }
+
+    public void keyTyped(KeyPress key) {
+    }
 }

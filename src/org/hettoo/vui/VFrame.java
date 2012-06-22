@@ -15,8 +15,8 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import java.util.Observer;
-import java.util.Observable;
+import java.util.List;
+import java.util.ArrayList;
 
 public class VFrame {
     private JFrame jFrame;
@@ -34,9 +34,8 @@ public class VFrame {
 
         jFrame.pack();
 
-        KeyListener keyListener = new KeyTransformer();
-        canvas = new VFrameCanvas(new VTheme(), panel, keyListener);
-        jFrame.addKeyListener(keyListener);
+        canvas = new VFrameCanvas(new VTheme(), panel);
+        jFrame.addKeyListener(canvas);
         jFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowActivated(WindowEvent event) {
@@ -50,7 +49,7 @@ public class VFrame {
         jFrame.setVisible(true);
     }
 
-    private class VFrameCanvas extends VCanvas {
+    private class VFrameCanvas extends VCanvas implements KeyListener {
         private VTheme theme;
         private VComponent component;
 
@@ -60,13 +59,14 @@ public class VFrame {
         private BufferStrategy strategy;
         private Graphics graphics;
 
-        public VFrameCanvas(VTheme theme, JPanel panel,
-                KeyListener keyListener) {
+        private List<Key> modifierKeys;
+
+        public VFrameCanvas(VTheme theme, JPanel panel) {
             super();
             this.theme = theme;
             this.panel = panel;
             canvas = new Canvas();
-            canvas.addKeyListener(keyListener);
+            canvas.addKeyListener(this);
             setSize(new Size(panel.getWidth(), panel.getHeight()));
             panel.add(canvas);
 
@@ -78,6 +78,8 @@ public class VFrame {
             ((Graphics2D)graphics).setRenderingHint(
                 RenderingHints.KEY_TEXT_ANTIALIASING,
                     RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+            modifierKeys = new ArrayList<Key>();
         }
 
         @Override
@@ -155,6 +157,33 @@ public class VFrame {
                 component.draw();
             strategy.show();
         }
+
+        public void keyPressed(KeyEvent event) {
+            Key key = Key.get(event.getKeyCode());
+            if (key.isModifier() && !modifierKeys.contains(key))
+                modifierKeys.add(key);
+            else if (component != null)
+                component.keyPressed(new KeyPress(key, modifierKeys));
+        }
+
+        public void keyReleased(KeyEvent event) {
+            Key key = Key.get(event.getKeyCode());
+            if (key.isModifier())
+                modifierKeys.remove(key);
+            else if (component != null)
+                component.keyReleased(new KeyPress(key, modifierKeys));
+        }
+
+        public void keyTyped(KeyEvent event) {
+            switch (event.getKeyChar()) {
+                case KeyEvent.VK_ESCAPE:
+                    destroy();
+                    return;
+            }
+            if (component != null)
+                component.keyTyped(new KeyPress(Key.get(event.getKeyCode()),
+                            modifierKeys));
+        }
     }
 
     public void setComponent(VComponent component) {
@@ -171,21 +200,5 @@ public class VFrame {
 
     public void destroy() {
         jFrame.dispose();
-    }
-
-    private class KeyTransformer implements KeyListener {
-        public void keyReleased(KeyEvent event) {
-        }
-
-        public void keyPressed(KeyEvent event) {
-        }
-
-        public void keyTyped(KeyEvent event) {
-            switch (event.getKeyChar()) {
-                case KeyEvent.VK_ESCAPE:
-                    destroy();
-                    break;
-            }
-        }
     }
 }

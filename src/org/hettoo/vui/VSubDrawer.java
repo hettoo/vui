@@ -64,4 +64,16 @@ public class VSubDrawer implements VDrawer {
     public Size getSize() {
         return drawer.getSize().limit(grid, limit.getSize());
     }
+
+    public void keyPressed(KeyPress key) {
+        drawer.keyPressed(key);
+    }
+
+    public void keyReleased(KeyPress key) {
+        drawer.keyReleased(key);
+    }
+
+    public void keyTyped(KeyPress key) {
+        drawer.keyTyped(key);
+    }
 }
