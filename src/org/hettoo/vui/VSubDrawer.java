@@ -11,12 +11,12 @@ public class VSubDrawer implements VDrawer {
         this.limit = limit;
     }
 
-    public int getTextWidth(String text, int size, FontStyle fontStyle) {
-        return drawer.getTextWidth(text, size, fontStyle);
+    public int getTextWidth(String text, FontStyle fontStyle) {
+        return drawer.getTextWidth(text, fontStyle);
     }
 
-    public int getTextHeight(int size, FontStyle fontStyle) {
-        return drawer.getTextHeight(size, fontStyle);
+    public int getTextHeight(FontStyle fontStyle) {
+        return drawer.getTextHeight(fontStyle);
     }
 
     public void drawRectangle(VRectangle rectangle) {
@@ -27,10 +27,9 @@ public class VSubDrawer implements VDrawer {
         drawer.drawRectangle(rectangle);
     }
 
-    public void drawText(String text, int size, Size position,
-            FontStyle fontStyle) {
+    public void drawText(String text, Size position, FontStyle fontStyle) {
         position.add(drawer.getSize().limit(grid, limit.getOffset()));
-        drawer.drawText(text, size, position, fontStyle);
+        drawer.drawText(text, position, fontStyle);
     }
 
     public void draw() {

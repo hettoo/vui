@@ -22,19 +22,19 @@ public class VCanvas extends VAbstractComponent implements VDrawer {
         return parent.getTheme();
     }
 
-    public int getTextWidth(String text, int size, FontStyle fontStyle) {
-        return parent.getTextWidth(text, size, fontStyle);
+    public int getTextWidth(String text, FontStyle fontStyle) {
+        return parent.getTextWidth(text, fontStyle);
     }
 
-    public int getTextHeight(int size, FontStyle fontStyle) {
-        return parent.getTextHeight(size, fontStyle);
+    public int getTextHeight(FontStyle fontStyle) {
+        return parent.getTextHeight(fontStyle);
     }
 
     public void drawRectangle(VRectangle rectangle) {
         parent.drawRectangle(rectangle);
     }
 
-    public void drawText(String text, int size, Size position,
-            FontStyle fontStyle) {
+    public void drawText(String text, Size position, FontStyle fontStyle) {
+        parent.drawText(text, position, fontStyle);
     }
 }

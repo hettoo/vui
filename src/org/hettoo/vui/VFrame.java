@@ -107,17 +107,14 @@ public class VFrame {
         }
 
         @Override
-        public int getTextWidth(String text, int size, FontStyle fontStyle) {
-            return graphics.getFontMetrics(new Font("Monospaced",
-                        convertFontStyle(fontStyle.getType()),
-                        size)).stringWidth(text);
+        public int getTextWidth(String text, FontStyle fontStyle) {
+            return graphics.getFontMetrics(
+                    createFont(fontStyle)).stringWidth(text);
         }
 
         @Override
-        public int getTextHeight(int size, FontStyle fontStyle) {
-            return graphics.getFontMetrics(new Font("Monospaced",
-                        convertFontStyle(fontStyle.getType()),
-                        size)).getHeight();
+        public int getTextHeight(FontStyle fontStyle) {
+            return graphics.getFontMetrics(createFont(fontStyle)).getHeight();
         }
 
         @Override
@@ -138,12 +135,15 @@ public class VFrame {
             return Font.PLAIN;
         }
 
+        private Font createFont(FontStyle style) {
+            return new Font("Monospaced", convertFontStyle(style.getType()),
+                    style.getSize());
+        }
+
         @Override
-        public void drawText(String text, int size, Size position,
-                FontStyle fontStyle) {
+        public void drawText(String text, Size position, FontStyle fontStyle) {
             setColor(fontStyle.getColor());
-            graphics.setFont(new Font("Monospaced",
-                        convertFontStyle(fontStyle.getType()), size));
+            graphics.setFont(createFont(fontStyle));
             graphics.drawString(text, position.getWidth(),
                     position.getHeight());
         }
