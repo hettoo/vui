@@ -24,13 +24,11 @@ public class VButton extends VAbstractComponent {
                             size.getHeight() - CONTENT_MARGIN * 2)),
                     parent.getTheme().getComponentColor()));
         if (label != null) {
-            FontStyle style = new FontStyle(FontType.PLAIN,
+            FontStyle style = new FontStyle(FontType.PLAIN, 18,
                     parent.getTheme().getComponentTextColor());
-            int fontSize = 18;
-            int textWidth = parent.getTextWidth(label, fontSize, style);
-            int textHeight = parent.getTextHeight(fontSize, style);
-            parent.drawText(label, fontSize,
-                    new Size((size.getWidth() - textWidth) / 2,
+            int textWidth = parent.getTextWidth(label, style);
+            int textHeight = parent.getTextHeight(style);
+            parent.drawText(label, new Size((size.getWidth() - textWidth) / 2,
                         size.getHeight() / 2 + textHeight / 5), style);
             // /5? wtf
         }
