@@ -8,6 +8,14 @@ public class VTheme {
         return new Color(0.05f, 0.03f, 0.01f);
     }
 
+    public Color getComponentColor() {
+        return new Color(0.94f, 0.94f, 0.72f);
+    }
+
+    public Color getComponentTextColor() {
+        return new Color(0, 0, 0);
+    }
+
     public Color getStatusColor(VStatus status) {
         switch (status) {
             case BUSY:

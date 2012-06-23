@@ -155,6 +155,11 @@ public class VFrame {
                         theme.getRootColor()));
             if (component != null)
                 component.draw();
+            show();
+        }
+
+        @Override
+        public void show() {
             strategy.show();
         }
 

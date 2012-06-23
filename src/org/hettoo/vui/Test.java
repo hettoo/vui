@@ -7,12 +7,16 @@ public class Test {
         frame.setComponent(grid);
         VButton button1 = new VButton();
         button1.setLabel("hoidaar");
-        grid.addComponent(button1, new Rectangle(new Size(1, 1),
-                    new Size(1, 1)));
+        grid.addComponent(new VLimitedComponent(button1,
+                    new Rectangle(new Size(1, 1), new Size(1, 1))));
         VButton button2 = new VButton();
         button2.setLabel("test");
-        grid.addComponent(button2, new Rectangle(new Size(0, 0),
-                    new Size(1, 1)));
+        grid.addComponent(new VLimitedComponent(button2,
+                    new Rectangle(new Size(0, 0), new Size(2, 1))));
+        VButton button3 = new VButton();
+        button3.setLabel("hallo");
+        grid.addComponent(new VLimitedComponent(button3,
+                    new Rectangle(new Size(0, 1), new Size(1, 1))));
         frame.show();
     }
 }
