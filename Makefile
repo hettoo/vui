@@ -1,10 +1,13 @@
-MAIN_CLASS = org.hettoo.vui.Test
+PROJECT = vui
+VERSION = 0_0
+MAIN_CLASS = org.hettoo.$(PROJECT).Test
 SRC_DIR = src
 BUILD_DIR = bin
 CLASS_DIR = $(BUILD_DIR)/classes
 
 SOURCES = $(shell find $(SRC_DIR) -iname '*.java')
 CLASSES = $(subst .java,.class,$(subst $(SRC_DIR),$(CLASS_DIR),$(SOURCES)))
+JAR = $(PROJECT)-$(VERSION).jar
 
 all: classes
 
@@ -19,4 +22,9 @@ $(CLASSES): $(CLASS_DIR) $(SOURCES)
 $(CLASS_DIR):
 	mkdir -p $@
 
-.PHONY: all run classes
+dist: $(JAR)
+
+$(JAR):
+	cd $(CLASS_DIR) && jar cfm ../../$(JAR) ../../manifest.txt *
+
+.PHONY: all run classes dist
