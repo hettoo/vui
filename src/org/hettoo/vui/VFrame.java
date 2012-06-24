@@ -73,13 +73,16 @@ public class VFrame {
             canvas.setIgnoreRepaint(true);
             canvas.createBufferStrategy(2);
             strategy = canvas.getBufferStrategy();
-            graphics = strategy.getDrawGraphics();
+            getGraphics();
 
+            modifierKeys = new ArrayList<Key>();
+        }
+
+        private void getGraphics() {
+            graphics = strategy.getDrawGraphics();
             ((Graphics2D)graphics).setRenderingHint(
                 RenderingHints.KEY_TEXT_ANTIALIASING,
                     RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
-            modifierKeys = new ArrayList<Key>();
         }
 
         @Override
@@ -160,7 +163,9 @@ public class VFrame {
 
         @Override
         public void show() {
+            graphics.dispose();
             strategy.show();
+            getGraphics();
         }
 
         public void keyPressed(KeyEvent event) {
