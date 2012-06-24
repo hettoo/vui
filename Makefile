@@ -25,6 +25,6 @@ $(CLASS_DIR):
 dist: $(JAR)
 
 $(JAR):
-	cd $(CLASS_DIR) && jar cfm ../../$(JAR) ../../manifest.txt *
+	jar cfm $(JAR) manifest.txt -C $(CLASS_DIR) .
 
 .PHONY: all run classes dist
