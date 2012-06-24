@@ -52,6 +52,7 @@ public class VFrame {
     private class VFrameCanvas extends VCanvas implements KeyListener {
         private VTheme theme;
         private VComponent component;
+        private RenderThread renderer;
 
         private JPanel panel;
         private Canvas canvas;
@@ -70,12 +71,15 @@ public class VFrame {
             setSize(new Size(panel.getWidth(), panel.getHeight()));
             panel.add(canvas);
 
+            modifierKeys = new ArrayList<Key>();
+
             canvas.setIgnoreRepaint(true);
             canvas.createBufferStrategy(2);
             strategy = canvas.getBufferStrategy();
             getGraphics();
 
-            modifierKeys = new ArrayList<Key>();
+            renderer = new RenderThread();
+            renderer.start();
         }
 
         private void getGraphics() {
@@ -83,6 +87,45 @@ public class VFrame {
             ((Graphics2D)graphics).setRenderingHint(
                 RenderingHints.KEY_TEXT_ANTIALIASING,
                     RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        }
+
+        private class RenderThread extends Thread {
+            private static final int DELAY = 40;
+
+            private boolean stop;
+            private boolean stopped;
+
+            public RenderThread() {
+            }
+
+            public void run() {
+                stop = false;
+                stopped = false;
+                while (!stop) {
+                    strategy.show();
+                    try {
+                        Thread.sleep(DELAY);
+                    } catch (Exception e) {
+                    }
+                }
+                synchronized (this) {
+                    stopped = true;
+                }
+            }
+
+            public void stopRunning() {
+                stop = true;
+                while (true) {
+                    synchronized (this) {
+                        if (stopped)
+                            return;
+                    }
+                }
+            }
+        }
+
+        public void stop() {
+            renderer.stopRunning();
         }
 
         @Override
@@ -158,11 +201,9 @@ public class VFrame {
                         theme.getRootColor()));
             if (component != null)
                 component.draw();
-            show();
         }
 
-        @Override
-        public void show() {
+        private void show() {
             graphics.dispose();
             strategy.show();
             getGraphics();
@@ -204,6 +245,7 @@ public class VFrame {
     }
 
     public void destroy() {
+        canvas.stop();
         jFrame.dispose();
     }
 }

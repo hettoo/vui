@@ -35,7 +35,6 @@ public class VGrid extends VAbstractComponent {
         component.getComponent().activate();
         active = component;
         active.getComponent().draw();
-        parent.show();
     }
 
     public void draw() {

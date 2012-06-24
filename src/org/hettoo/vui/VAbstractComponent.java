@@ -43,10 +43,6 @@ public abstract class VAbstractComponent implements VComponent {
         drawStatus();
     }
 
-    public void show() {
-        parent.show();
-    }
-
     protected void drawStatus() {
         Size size = parent.getSize();
         parent.drawRectangle(new VRectangle(new Rectangle(new Size(0, 0),

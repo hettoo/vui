@@ -34,8 +34,4 @@ public class VCanvas extends VAbstractComponent implements VDrawer {
     public void drawText(String text, Size position, FontStyle fontStyle) {
         parent.drawText(text, position, fontStyle);
     }
-
-    public void show() {
-        parent.show();
-    }
 }

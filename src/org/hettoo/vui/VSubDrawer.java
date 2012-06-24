@@ -37,10 +37,6 @@ public class VSubDrawer implements VDrawer {
         drawer.draw();
     }
 
-    public void show() {
-        drawer.show();
-    }
-
     public void activate() {
         drawer.activate();
     }
