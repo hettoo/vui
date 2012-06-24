@@ -59,6 +59,7 @@ public class VFrame {
         private BufferStrategy strategy;
         private Graphics graphics;
 
+        private List<Key> pressedKeys;
         private List<Key> modifierKeys;
 
         public VFrameCanvas(VTheme theme, JPanel panel) {
@@ -79,6 +80,7 @@ public class VFrame {
                 RenderingHints.KEY_TEXT_ANTIALIASING,
                     RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
+            pressedKeys = new ArrayList<Key>();
             modifierKeys = new ArrayList<Key>();
         }
 
@@ -165,18 +167,26 @@ public class VFrame {
 
         public void keyPressed(KeyEvent event) {
             Key key = Key.get(event.getKeyCode());
-            if (key.isModifier() && !modifierKeys.contains(key))
+            if (key.isModifier() && !modifierKeys.contains(key)) {
                 modifierKeys.add(key);
-            else if (component != null)
-                component.keyPressed(new KeyPress(key, modifierKeys));
+            } else if (component != null) {
+                KeyPress keyPress = new KeyPress(key, modifierKeys);
+                component.keyPressed(keyPress);
+                if (pressedKeys.contains(key))
+                    component.keyTyped(keyPress);
+                else
+                    pressedKeys.add(key);
+            }
         }
 
         public void keyReleased(KeyEvent event) {
             Key key = Key.get(event.getKeyCode());
-            if (key.isModifier())
+            if (key.isModifier()) {
                 modifierKeys.remove(key);
-            else if (component != null)
-                component.keyReleased(new KeyPress(key, modifierKeys));
+            } else if (pressedKeys.contains(key) && component != null) {
+                component.keyTyped(new KeyPress(key, modifierKeys));
+                pressedKeys.remove(key);
+            }
         }
 
         public void keyTyped(KeyEvent event) {
@@ -185,9 +195,6 @@ public class VFrame {
                     destroy();
                     return;
             }
-            if (component != null)
-                component.keyTyped(new KeyPress(Key.get(event.getKeyCode()),
-                            modifierKeys));
         }
     }
 

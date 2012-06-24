@@ -72,10 +72,6 @@ public class VSubDrawer implements VDrawer {
         drawer.keyPressed(key);
     }
 
-    public void keyReleased(KeyPress key) {
-        drawer.keyReleased(key);
-    }
-
     public void keyTyped(KeyPress key) {
         drawer.keyTyped(key);
     }

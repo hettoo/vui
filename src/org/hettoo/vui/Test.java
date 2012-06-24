@@ -6,6 +6,11 @@ public class Test {
         VGrid grid = new VGrid(new Size(2, 2));
         frame.setComponent(grid);
         VButton button1 = new VButton();
+        button1.addActionListener(new ActionListener() {
+            public void action() {
+                System.out.println("hi");
+            }
+        });
         button1.setLabel("hoidaar");
         grid.addComponent(new VLimitedComponent(button1,
                     new Rectangle(new Size(1, 1), new Size(1, 1))));

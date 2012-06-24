@@ -1,9 +1,19 @@
 package org.hettoo.vui;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class VButton extends VAbstractComponent {
     private String label;
 
+    private List<ActionListener> listeners;
+
     public VButton() {
+        listeners = new ArrayList<ActionListener>();
+    }
+
+    public void addActionListener(ActionListener listener) {
+        listeners.add(listener);
     }
 
     public String getLabel() {
@@ -31,6 +41,15 @@ public class VButton extends VAbstractComponent {
             parent.drawText(label, new Size((size.getWidth() - textWidth) / 2,
                         size.getHeight() / 2 + textHeight / 5), style);
             // /5? wtf
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyPress key) {
+        super.keyTyped(key);
+        if (key.getKey() == Key.VK_ENTER) {
+            for (ActionListener listener : listeners)
+                listener.action();
         }
     }
 }

@@ -1,8 +1,5 @@
 package org.hettoo.vui;
 
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
-
 public class VCanvas extends VAbstractComponent implements VDrawer {
     private Size size;
 

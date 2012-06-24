@@ -11,6 +11,5 @@ public interface VComponent {
     public void draw();
 
     public void keyPressed(KeyPress key);
-    public void keyReleased(KeyPress key);
     public void keyTyped(KeyPress key);
 }
