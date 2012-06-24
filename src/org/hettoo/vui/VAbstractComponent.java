@@ -67,7 +67,4 @@ public abstract class VAbstractComponent implements VComponent {
 
     public void keyPressed(KeyPress key) {
     }
-
-    public void keyTyped(KeyPress key) {
-    }
 }

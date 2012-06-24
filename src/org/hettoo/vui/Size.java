@@ -17,9 +17,8 @@ public class Size {
         return height;
     }
 
-    public void add(Size other) {
-        width += other.width;
-        height += other.height;
+    public Size add(Size other) {
+        return new Size(width + other.width, height + other.height);
     }
 
     public Size limit(Size grid, Size limit) {

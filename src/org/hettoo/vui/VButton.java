@@ -39,14 +39,14 @@ public class VButton extends VAbstractComponent {
             int textWidth = parent.getTextWidth(label, style);
             int textHeight = parent.getTextHeight(style);
             parent.drawText(label, new Size((size.getWidth() - textWidth) / 2,
-                        size.getHeight() / 2 + textHeight / 5), style);
+                        (size.getHeight() + textHeight / 2) / 2), style);
             // /5? wtf
         }
     }
 
     @Override
-    public void keyTyped(KeyPress key) {
-        super.keyTyped(key);
+    public void keyPressed(KeyPress key) {
+        super.keyPressed(key);
         if (key.getKey() == Key.VK_ENTER) {
             for (ActionListener listener : listeners)
                 listener.action();

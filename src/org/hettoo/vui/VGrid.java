@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class VGrid extends VAbstractComponent {
     private Size size;
     private VLimitedComponent active;
+    private Size activeSquare;
     private List<VLimitedComponent> components;
 
     public VGrid(Size size) {
@@ -15,21 +16,26 @@ public class VGrid extends VAbstractComponent {
     }
 
     public void addComponent(VLimitedComponent component) {
-        component.getComponent().setParent(new VSubDrawer(parent, size,
-                    component.getLimit()));
+        Rectangle limit = component.getLimit();
+        component.getComponent().setParent(new VSubDrawer(parent, size, limit));
         components.add(component);
         if (components.size() == 1) {
             setFocus(component);
+            activeSquare = limit.getOffset();
         } else {
             component.getComponent().disactivate();
         }
     }
 
     private void setFocus(VLimitedComponent component) {
-        if (active != null)
+        if (active != null) {
             active.getComponent().disactivate();
+            active.getComponent().draw();
+        }
         component.getComponent().activate();
         active = component;
+        active.getComponent().draw();
+        parent.show();
     }
 
     public void draw() {
@@ -37,13 +43,13 @@ public class VGrid extends VAbstractComponent {
             component.getComponent().draw();
     }
 
-    private Integer next(int offset, int size, int otherOffset, int otherSize,
-            int offset2, int otherOffset2, int otherSize2) {
+    private Integer nextDistance(int offset, int size, int otherOffset,
+            int otherSize, int offset2, int otherOffset2, int otherSize2) {
         if (((otherOffset >= offset && otherOffset < offset + size)
-                    || (offset >= otherOffset && offset < otherOffset + otherSize))
-                && otherOffset2 + otherSize2 <= offset2) {
+                    || (offset >= otherOffset
+                        && offset < otherOffset + otherSize))
+                && otherOffset2 + otherSize2 <= offset2)
             return offset2 - (otherOffset2 + otherSize2);
-                }
         return null;
     }
 
@@ -66,40 +72,40 @@ public class VGrid extends VAbstractComponent {
                 Integer distance = null;
                 switch (k) {
                     case VK_H:
-                        distance = next(offset.getHeight(),
-                                size.getHeight(),
+                        distance = nextDistance(activeSquare.getHeight(),
+                                1,
                                 otherOffset.getHeight(),
                                 otherSize.getHeight(),
-                                offset.getWidth(),
+                                activeSquare.getWidth(),
                                 otherOffset.getWidth(),
                                 otherSize.getWidth());
                         break;
                     case VK_J:
-                        distance = next(otherOffset.getWidth(),
+                        distance = nextDistance(otherOffset.getWidth(),
                                 otherSize.getWidth(),
-                                offset.getWidth(),
-                                size.getWidth(),
+                                activeSquare.getWidth(),
+                                1,
                                 otherOffset.getHeight(),
-                                offset.getHeight(),
-                                size.getHeight());
+                                activeSquare.getHeight(),
+                                1);
                         break;
                     case VK_K:
-                        distance = next(offset.getWidth(),
-                                size.getWidth(),
+                        distance = nextDistance(activeSquare.getWidth(),
+                                1,
                                 otherOffset.getWidth(),
                                 otherSize.getWidth(),
-                                offset.getHeight(),
+                                activeSquare.getHeight(),
                                 otherOffset.getHeight(),
                                 otherSize.getHeight());
                         break;
                     case VK_L:
-                        distance = next(otherOffset.getHeight(),
+                        distance = nextDistance(otherOffset.getHeight(),
                                 otherSize.getHeight(),
-                                offset.getHeight(),
-                                size.getHeight(),
+                                activeSquare.getHeight(),
+                                1,
                                 otherOffset.getWidth(),
-                                offset.getWidth(),
-                                size.getWidth());
+                                activeSquare.getWidth(),
+                                1);
                         break;
                 }
                 if (distance != null && (next == null || distance < closest)) {
@@ -108,21 +114,32 @@ public class VGrid extends VAbstractComponent {
                 }
             }
         }
-        if (next != null) {
-            active.getComponent().draw();
+        if (next != null)
             setFocus(next);
-            next.getComponent().draw();
-            parent.show();
-            return;
+        Rectangle activeLimit = active.getLimit();
+        Size activeMinimumOffset = activeLimit.getOffset();
+        Size activeMaximumOffset = activeLimit.getOffset().add(
+                activeLimit.getSize()).add(new Size(-1, -1));
+        switch (k) {
+            case VK_H:
+                activeSquare = new Size(activeMinimumOffset.getWidth(),
+                        activeSquare.getHeight());
+                break;
+            case VK_J:
+                activeSquare = new Size(activeSquare.getWidth(),
+                        activeMaximumOffset.getHeight());
+                break;
+            case VK_K:
+                activeSquare = new Size(activeSquare.getWidth(),
+                        activeMinimumOffset.getHeight());
+                break;
+            case VK_L:
+                activeSquare = new Size(activeMaximumOffset.getWidth(),
+                        activeSquare.getHeight());
+                break;
         }
-        active.getComponent().keyPressed(key);
-    }
-
-    @Override
-    public void keyTyped(KeyPress key) {
-        super.keyTyped(key);
-        if (active == null)
+        if (next != null)
             return;
-        active.getComponent().keyTyped(key);
+        active.getComponent().keyPressed(key);
     }
 }

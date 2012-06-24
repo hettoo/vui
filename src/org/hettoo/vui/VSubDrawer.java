@@ -22,13 +22,14 @@ public class VSubDrawer implements VDrawer {
     public void drawRectangle(VRectangle rectangle) {
         Rectangle rect = rectangle.getRectangle();
         Size offset = rect.getOffset();
-        offset.add(drawer.getSize().limit(grid, limit.getOffset()));
+        offset = offset.add(drawer.getSize().limit(grid, limit.getOffset()));
         rectangle.setRectangle(new Rectangle(offset, rect.getSize()));
         drawer.drawRectangle(rectangle);
     }
 
     public void drawText(String text, Size position, FontStyle fontStyle) {
-        position.add(drawer.getSize().limit(grid, limit.getOffset()));
+        position = position.add(drawer.getSize().limit(grid,
+                    limit.getOffset()));
         drawer.drawText(text, position, fontStyle);
     }
 
@@ -70,9 +71,5 @@ public class VSubDrawer implements VDrawer {
 
     public void keyPressed(KeyPress key) {
         drawer.keyPressed(key);
-    }
-
-    public void keyTyped(KeyPress key) {
-        drawer.keyTyped(key);
     }
 }
