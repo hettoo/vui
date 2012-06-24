@@ -142,7 +142,8 @@ public class VGrid extends VAbstractComponent {
                         break;
                 }
                 if (niceDistance != null
-                        && (next == null || niceDistance < closest || !nice)) {
+                        && (next == null || niceDistance < closest
+                            || (!nice && niceDistance == closest))) {
                     next = other;
                     closest = niceDistance;
                     nice = true;
