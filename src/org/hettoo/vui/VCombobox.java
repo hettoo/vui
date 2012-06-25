@@ -76,8 +76,9 @@ public class VCombobox<E> extends VAbstractComponent {
         super.keyPressed(key);
         if (items.isEmpty())
             return;
-        if (key.getKey() == Key.VK_ENTER) {
-            VFrame frame = new VFrame(new Size(50 * items.size(), 150));
+        if (key.getKey().isActivator()) {
+            VFrame frame = new VFrame(new Size(300, 80 * items.size()));
+            frame.setTitle("Select an item");
             VGrid grid = new VGrid(new Size(1, items.size()));
             frame.setComponent(grid);
             int i = 0;

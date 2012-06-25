@@ -39,8 +39,8 @@ public class VFrame {
         jFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent event) {
-                jFrame.setLocationRelativeTo(null);
                 draw();
+                jFrame.setLocationRelativeTo(null);
             }
         });
     }
@@ -242,6 +242,10 @@ public class VFrame {
 
     public void setTitle(String title) {
         jFrame.setTitle(title);
+    }
+
+    public String getTitle() {
+        return jFrame.getTitle();
     }
 
     public void destroy() {

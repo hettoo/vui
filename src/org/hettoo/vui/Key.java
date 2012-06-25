@@ -158,18 +158,18 @@ public enum Key {
         this.value = value;
     }
 
-    public int getValue() {
-        return value;
-    }
-
     public boolean isModifier() {
         return this == VK_SHIFT || this == VK_CONTROL || this == VK_ALT
             || this == VK_ALT_GRAPH;
     }
 
+    public boolean isActivator() {
+        return this == VK_SPACE;
+    }
+
     public static Key get(int value) {
         for (Key k : values()) {
-            if (k.getValue() == value)
+            if (k.value == value)
                 return k;
         }
         return VK_UNDEFINED;

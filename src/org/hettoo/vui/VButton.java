@@ -45,7 +45,7 @@ public class VButton extends VAbstractComponent {
     @Override
     public void keyPressed(KeyPress key) {
         super.keyPressed(key);
-        if (key.getKey() == Key.VK_ENTER) {
+        if (key.getKey().isActivator()) {
             for (ActionListener listener : listeners)
                 listener.action();
         }
