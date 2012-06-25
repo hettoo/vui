@@ -5,6 +5,7 @@ SRC_DIR = src
 BUILD_DIR = bin
 CLASS_DIR = $(BUILD_DIR)/classes
 
+THIS = Makefile
 SOURCES = $(shell find $(SRC_DIR) -iname '*.java')
 CLASSES = $(subst .java,.class,$(subst $(SRC_DIR),$(CLASS_DIR),$(SOURCES)))
 JAR = $(PROJECT)-$(VERSION).jar
@@ -16,15 +17,16 @@ run: classes
 
 classes: $(CLASSES)
 
-$(CLASSES): $(CLASS_DIR) $(SOURCES)
+$(CLASSES): $(SOURCES) $(THIS)
+	mkdir -p $(CLASS_DIR)
 	javac -Xlint:unchecked -d $(CLASS_DIR) $(SOURCES)
-
-$(CLASS_DIR):
-	mkdir -p $@
 
 dist: $(JAR)
 
-$(JAR):
+$(JAR): $(CLASSES)
 	jar cfm $(JAR) manifest.txt -C $(CLASS_DIR) .
 
-.PHONY: all run classes dist
+clean:
+	rm -rf $(BUILD_DIR)
+
+.PHONY: all run classes dist clean
