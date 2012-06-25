@@ -49,10 +49,11 @@ public class VFrame {
         jFrame.setVisible(true);
     }
 
-    private class VFrameCanvas extends VCanvas implements KeyListener {
+    private class VFrameCanvas implements VDrawer, KeyListener {
         private VTheme theme;
         private VComponent component;
         private RenderThread renderer;
+        private Vector size;
 
         private JPanel panel;
         private Canvas canvas;
@@ -128,12 +129,15 @@ public class VFrame {
             renderer.stopRunning();
         }
 
-        @Override
         public void setSize(Vector size) {
-            super.setSize(size);
+            this.size = size;
             panel.setPreferredSize(new java.awt.Dimension(size.getX(),
                         size.getY()));
             canvas.setBounds(0, 0, size.getX(), size.getY());
+        }
+
+        public Vector getSize() {
+            return size;
         }
 
         public void setComponent(VComponent component) {
@@ -142,7 +146,6 @@ public class VFrame {
             component.activate();
         }
 
-        @Override
         public VTheme getTheme() {
             return theme;
         }
@@ -152,18 +155,15 @@ public class VFrame {
                         color.getGreen(), color.getBlue(), color.getAlpha()));
         }
 
-        @Override
         public int getTextWidth(String text, FontStyle fontStyle) {
             return graphics.getFontMetrics(
                     createFont(fontStyle)).stringWidth(text);
         }
 
-        @Override
         public int getTextHeight(FontStyle fontStyle) {
             return graphics.getFontMetrics(createFont(fontStyle)).getHeight();
         }
 
-        @Override
         public void drawRectangle(VRectangle rectangle) {
             setColor(rectangle.getColor());
             Rectangle rect = rectangle.getRectangle();
@@ -186,15 +186,14 @@ public class VFrame {
                     style.getSize());
         }
 
-        @Override
-        public void drawText(String text, Vector position, FontStyle fontStyle) {
+        public void drawText(String text, Vector position,
+                FontStyle fontStyle) {
             setColor(fontStyle.getColor());
             graphics.setFont(createFont(fontStyle));
             graphics.drawString(text, position.getX(),
                     position.getY());
         }
 
-        @Override
         public void draw() {
             drawRectangle(new VRectangle(new Rectangle(new Vector(0, 0),
                             new Vector(canvas.getWidth(), canvas.getHeight())),
@@ -213,8 +212,8 @@ public class VFrame {
             Key key = Key.get(event.getKeyCode());
             if (key.isModifier() && !modifierKeys.contains(key))
                 modifierKeys.add(key);
-            else if (component != null)
-                component.keyPressed(new KeyPress(key, modifierKeys));
+            else
+                keyPressed(new KeyPress(key, modifierKeys));
         }
 
         public void keyReleased(KeyEvent event) {
@@ -224,11 +223,34 @@ public class VFrame {
         }
 
         public void keyTyped(KeyEvent event) {
-            switch (event.getKeyChar()) {
-                case KeyEvent.VK_ESCAPE:
+        }
+
+        public void keyPressed(KeyPress key) {
+            switch (key.getKey()) {
+                case VK_ESCAPE:
                     destroy();
                     return;
             }
+            if (component == null)
+                return;
+            component.keyPressed(key);
+        }
+
+        public VStatus getStatus() {
+            return null;
+        }
+
+        public void activate() {
+        }
+
+        public void disactivate() {
+        }
+
+        public void setParent(VDrawer parent) {
+        }
+
+        public VDrawer getParent() {
+            return null;
         }
     }
 
