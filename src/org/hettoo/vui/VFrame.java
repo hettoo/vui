@@ -22,14 +22,14 @@ public class VFrame {
     private JFrame jFrame;
     private VFrameCanvas canvas;
 
-    public VFrame(Size size) {
+    public VFrame(Vector size) {
         jFrame = new JFrame();
         jFrame.setUndecorated(true);
         jFrame.setResizable(false);
         setTitle("VUI application");
         JPanel panel = (JPanel)jFrame.getContentPane();
-        panel.setPreferredSize(new java.awt.Dimension(size.getWidth(),
-                    size.getHeight()));
+        panel.setPreferredSize(new java.awt.Dimension(size.getX(),
+                    size.getY()));
         panel.setLayout(null);
 
         jFrame.pack();
@@ -68,7 +68,7 @@ public class VFrame {
             this.panel = panel;
             canvas = new Canvas();
             canvas.addKeyListener(this);
-            setSize(new Size(panel.getWidth(), panel.getHeight()));
+            setSize(new Vector(panel.getWidth(), panel.getHeight()));
             panel.add(canvas);
 
             modifierKeys = new ArrayList<Key>();
@@ -129,11 +129,11 @@ public class VFrame {
         }
 
         @Override
-        public void setSize(Size size) {
+        public void setSize(Vector size) {
             super.setSize(size);
-            panel.setPreferredSize(new java.awt.Dimension(size.getWidth(),
-                        size.getHeight()));
-            canvas.setBounds(0, 0, size.getWidth(), size.getHeight());
+            panel.setPreferredSize(new java.awt.Dimension(size.getX(),
+                        size.getY()));
+            canvas.setBounds(0, 0, size.getX(), size.getY());
         }
 
         public void setComponent(VComponent component) {
@@ -167,10 +167,10 @@ public class VFrame {
         public void drawRectangle(VRectangle rectangle) {
             setColor(rectangle.getColor());
             Rectangle rect = rectangle.getRectangle();
-            Size offset = rect.getOffset();
-            Size size = rect.getSize();
-            graphics.fillRect(offset.getWidth(), offset.getHeight(),
-                    size.getWidth(), size.getHeight());
+            Vector offset = rect.getOffset();
+            Vector size = rect.getSize();
+            graphics.fillRect(offset.getX(), offset.getY(),
+                    size.getX(), size.getY());
         }
 
         private int convertFontStyle(FontType style) {
@@ -187,17 +187,17 @@ public class VFrame {
         }
 
         @Override
-        public void drawText(String text, Size position, FontStyle fontStyle) {
+        public void drawText(String text, Vector position, FontStyle fontStyle) {
             setColor(fontStyle.getColor());
             graphics.setFont(createFont(fontStyle));
-            graphics.drawString(text, position.getWidth(),
-                    position.getHeight());
+            graphics.drawString(text, position.getX(),
+                    position.getY());
         }
 
         @Override
         public void draw() {
-            drawRectangle(new VRectangle(new Rectangle(new Size(0, 0),
-                            new Size(canvas.getWidth(), canvas.getHeight())),
+            drawRectangle(new VRectangle(new Rectangle(new Vector(0, 0),
+                            new Vector(canvas.getWidth(), canvas.getHeight())),
                         theme.getRootColor()));
             if (component != null)
                 component.draw();

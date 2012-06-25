@@ -32,11 +32,11 @@ public class VCombobox<E> extends VAbstractComponent {
     @Override
     public void draw() {
         super.draw();
-        Size size = parent.getSize();
+        Vector size = parent.getSize();
         parent.drawRectangle(new VRectangle(new Rectangle(
-                        new Size(CONTENT_MARGIN, CONTENT_MARGIN),
-                        new Size(size.getWidth() - CONTENT_MARGIN * 2,
-                            size.getHeight() - CONTENT_MARGIN * 2)),
+                        new Vector(CONTENT_MARGIN, CONTENT_MARGIN),
+                        new Vector(size.getX() - CONTENT_MARGIN * 2,
+                            size.getY() - CONTENT_MARGIN * 2)),
                     parent.getTheme().getComponentColor()));
         E item = getItem();
         if (item != null) {
@@ -44,8 +44,8 @@ public class VCombobox<E> extends VAbstractComponent {
             int textWidth = parent.getTextWidth(item.toString(), style);
             int textHeight = parent.getTextHeight(style);
             parent.drawText(item.toString(),
-                    new Size(textHeight,
-                        (size.getHeight() + textHeight / 2) / 2), style);
+                    new Vector(textHeight,
+                        (size.getY() + textHeight / 2) / 2), style);
         }
     }
     
@@ -77,9 +77,9 @@ public class VCombobox<E> extends VAbstractComponent {
         if (items.isEmpty())
             return;
         if (key.getKey().isActivator()) {
-            VFrame frame = new VFrame(new Size(300, 80 * items.size()));
+            VFrame frame = new VFrame(new Vector(300, 80 * items.size()));
             frame.setTitle("Select an item");
-            VGrid grid = new VGrid(new Size(1, items.size()));
+            VGrid grid = new VGrid(new Vector(1, items.size()));
             frame.setComponent(grid);
             int i = 0;
             for (E item : items) {
@@ -87,7 +87,7 @@ public class VCombobox<E> extends VAbstractComponent {
                 button.addActionListener(new ItemSelector(i, item, frame));
                 button.setLabel(item.toString());
                 grid.addComponent(new VLimitedComponent(button,
-                            new Rectangle(new Size(0, i), new Size(1, 1))),
+                            new Rectangle(new Vector(0, i), new Vector(1, 1))),
                         i == index);
                 i++;
             }

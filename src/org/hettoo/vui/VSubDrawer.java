@@ -2,10 +2,10 @@ package org.hettoo.vui;
 
 public class VSubDrawer implements VDrawer {
     private VDrawer drawer;
-    private Size grid;
+    private Vector grid;
     private Rectangle limit;
 
-    public VSubDrawer(VDrawer drawer, Size grid, Rectangle limit) {
+    public VSubDrawer(VDrawer drawer, Vector grid, Rectangle limit) {
         this.drawer = drawer;
         this.grid = grid;
         this.limit = limit;
@@ -21,13 +21,13 @@ public class VSubDrawer implements VDrawer {
 
     public void drawRectangle(VRectangle rectangle) {
         Rectangle rect = rectangle.getRectangle();
-        Size offset = rect.getOffset();
+        Vector offset = rect.getOffset();
         offset = offset.add(drawer.getSize().limit(grid, limit.getOffset()));
         rectangle.setRectangle(new Rectangle(offset, rect.getSize()));
         drawer.drawRectangle(rectangle);
     }
 
-    public void drawText(String text, Size position, FontStyle fontStyle) {
+    public void drawText(String text, Vector position, FontStyle fontStyle) {
         position = position.add(drawer.getSize().limit(grid,
                     limit.getOffset()));
         drawer.drawText(text, position, fontStyle);
@@ -61,7 +61,7 @@ public class VSubDrawer implements VDrawer {
         drawer.setParent(parent);
     }
 
-    public Size getSize() {
+    public Vector getSize() {
         return drawer.getSize().limit(grid, limit.getSize());
     }
 

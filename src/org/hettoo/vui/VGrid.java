@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class VGrid extends VAbstractComponent {
-    private Size size;
+    private Vector size;
     private VLimitedComponent active;
-    private Size activeSquare;
+    private Vector activeSquare;
     private List<VLimitedComponent> components;
 
-    public VGrid(Size size) {
+    public VGrid(Vector size) {
         super();
         this.size = size;
         components = new ArrayList<VLimitedComponent>();
@@ -65,84 +65,84 @@ public class VGrid extends VAbstractComponent {
         VLimitedComponent next = null;
         boolean nice = false;
         Rectangle current = active.getLimit();
-        Size offset = current.getOffset();
-        Size size = current.getSize();
+        Vector offset = current.getOffset();
+        Vector size = current.getSize();
         int closest = 0;
         for (VLimitedComponent other : components) {
             if (other != active) {
                 Rectangle otherLimit = other.getLimit();
-                Size otherOffset = otherLimit.getOffset();
-                Size otherSize = otherLimit.getSize();
+                Vector otherOffset = otherLimit.getOffset();
+                Vector otherSize = otherLimit.getSize();
                 Integer niceDistance = null;
                 Integer distance = null;
                 switch (k) {
                     case VK_H:
-                        niceDistance = nextDistance(activeSquare.getHeight(),
+                        niceDistance = nextDistance(activeSquare.getY(),
                                 1,
-                                otherOffset.getHeight(),
-                                otherSize.getHeight(),
-                                activeSquare.getWidth(),
-                                otherOffset.getWidth(),
-                                otherSize.getWidth());
+                                otherOffset.getY(),
+                                otherSize.getY(),
+                                activeSquare.getX(),
+                                otherOffset.getX(),
+                                otherSize.getX());
                         if (niceDistance == null)
-                            distance = nextDistance(offset.getHeight(),
-                                    size.getHeight(),
-                                    otherOffset.getHeight(),
-                                    otherSize.getHeight(),
-                                    offset.getWidth(),
-                                    otherOffset.getWidth(),
-                                    otherSize.getWidth());
+                            distance = nextDistance(offset.getY(),
+                                    size.getY(),
+                                    otherOffset.getY(),
+                                    otherSize.getY(),
+                                    offset.getX(),
+                                    otherOffset.getX(),
+                                    otherSize.getX());
                         break;
                     case VK_J:
-                        niceDistance = nextDistance(otherOffset.getWidth(),
-                                otherSize.getWidth(),
-                                activeSquare.getWidth(),
+                        niceDistance = nextDistance(otherOffset.getX(),
+                                otherSize.getX(),
+                                activeSquare.getX(),
                                 1,
-                                otherOffset.getHeight(),
-                                activeSquare.getHeight(),
+                                otherOffset.getY(),
+                                activeSquare.getY(),
                                 1);
                         if (niceDistance == null)
-                            distance = nextDistance(otherOffset.getWidth(),
-                                    otherSize.getWidth(),
-                                    offset.getWidth(),
-                                    size.getWidth(),
-                                    otherOffset.getHeight(),
-                                    offset.getHeight(),
-                                    size.getHeight());
+                            distance = nextDistance(otherOffset.getX(),
+                                    otherSize.getX(),
+                                    offset.getX(),
+                                    size.getX(),
+                                    otherOffset.getY(),
+                                    offset.getY(),
+                                    size.getY());
                         break;
                     case VK_K:
-                        niceDistance = nextDistance(activeSquare.getWidth(),
+                        niceDistance = nextDistance(activeSquare.getX(),
                                 1,
-                                otherOffset.getWidth(),
-                                otherSize.getWidth(),
-                                activeSquare.getHeight(),
-                                otherOffset.getHeight(),
-                                otherSize.getHeight());
+                                otherOffset.getX(),
+                                otherSize.getX(),
+                                activeSquare.getY(),
+                                otherOffset.getY(),
+                                otherSize.getY());
                         if (niceDistance == null)
-                            distance = nextDistance(offset.getWidth(),
-                                    size.getWidth(),
-                                    otherOffset.getWidth(),
-                                    otherSize.getWidth(),
-                                    offset.getHeight(),
-                                    otherOffset.getHeight(),
-                                    otherSize.getHeight());
+                            distance = nextDistance(offset.getX(),
+                                    size.getX(),
+                                    otherOffset.getX(),
+                                    otherSize.getX(),
+                                    offset.getY(),
+                                    otherOffset.getY(),
+                                    otherSize.getY());
                         break;
                     case VK_L:
-                        niceDistance = nextDistance(otherOffset.getHeight(),
-                                otherSize.getHeight(),
-                                activeSquare.getHeight(),
+                        niceDistance = nextDistance(otherOffset.getY(),
+                                otherSize.getY(),
+                                activeSquare.getY(),
                                 1,
-                                otherOffset.getWidth(),
-                                activeSquare.getWidth(),
+                                otherOffset.getX(),
+                                activeSquare.getX(),
                                 1);
                         if (niceDistance == null)
-                            distance = nextDistance(otherOffset.getHeight(),
-                                    otherSize.getHeight(),
-                                    offset.getHeight(),
-                                    size.getHeight(),
-                                    otherOffset.getWidth(),
-                                    offset.getWidth(),
-                                    size.getWidth());
+                            distance = nextDistance(otherOffset.getY(),
+                                    otherSize.getY(),
+                                    offset.getY(),
+                                    size.getY(),
+                                    otherOffset.getX(),
+                                    offset.getX(),
+                                    size.getX());
                         break;
                 }
                 if (niceDistance != null
@@ -162,25 +162,25 @@ public class VGrid extends VAbstractComponent {
         if (next != null)
             setFocus(next);
         Rectangle activeLimit = active.getLimit();
-        Size activeMinimumOffset = activeLimit.getOffset();
-        Size activeMaximumOffset = activeLimit.getOffset().add(
-                activeLimit.getSize()).add(new Size(-1, -1));
+        Vector activeMinimumOffset = activeLimit.getOffset();
+        Vector activeMaximumOffset = activeLimit.getOffset().add(
+                activeLimit.getSize()).add(new Vector(-1, -1));
         switch (k) {
             case VK_H:
-                activeSquare = new Size(activeMinimumOffset.getWidth(),
-                        activeSquare.getHeight());
+                activeSquare = new Vector(activeMinimumOffset.getX(),
+                        activeSquare.getY());
                 break;
             case VK_J:
-                activeSquare = new Size(activeSquare.getWidth(),
-                        activeMaximumOffset.getHeight());
+                activeSquare = new Vector(activeSquare.getX(),
+                        activeMaximumOffset.getY());
                 break;
             case VK_K:
-                activeSquare = new Size(activeSquare.getWidth(),
-                        activeMinimumOffset.getHeight());
+                activeSquare = new Vector(activeSquare.getX(),
+                        activeMinimumOffset.getY());
                 break;
             case VK_L:
-                activeSquare = new Size(activeMaximumOffset.getWidth(),
-                        activeSquare.getHeight());
+                activeSquare = new Vector(activeMaximumOffset.getX(),
+                        activeSquare.getY());
                 break;
         }
         if (next != null)

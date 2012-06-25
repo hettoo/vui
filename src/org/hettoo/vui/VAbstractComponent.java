@@ -44,20 +44,20 @@ public abstract class VAbstractComponent implements VComponent {
     }
 
     protected void drawStatus() {
-        Size size = parent.getSize();
-        parent.drawRectangle(new VRectangle(new Rectangle(new Size(0, 0),
-                        new Size(STATUS_MARGIN, size.getHeight())),
+        Vector size = parent.getSize();
+        parent.drawRectangle(new VRectangle(new Rectangle(new Vector(0, 0),
+                        new Vector(STATUS_MARGIN, size.getY())),
                     getStatusColor()));
         parent.drawRectangle(new VRectangle(new Rectangle(
-                        new Size(size.getWidth() - STATUS_MARGIN, 0),
-                        new Size(STATUS_MARGIN, size.getHeight())),
+                        new Vector(size.getX() - STATUS_MARGIN, 0),
+                        new Vector(STATUS_MARGIN, size.getY())),
                     getStatusColor()));
-        parent.drawRectangle(new VRectangle(new Rectangle(new Size(0, 0),
-                        new Size(size.getWidth(), STATUS_MARGIN)),
+        parent.drawRectangle(new VRectangle(new Rectangle(new Vector(0, 0),
+                        new Vector(size.getX(), STATUS_MARGIN)),
                     getStatusColor()));
         parent.drawRectangle(new VRectangle(new Rectangle(
-                        new Size(0, size.getHeight() - STATUS_MARGIN),
-                        new Size(size.getWidth(), STATUS_MARGIN)),
+                        new Vector(0, size.getY() - STATUS_MARGIN),
+                        new Vector(size.getX(), STATUS_MARGIN)),
                     getStatusColor()));
     }
 

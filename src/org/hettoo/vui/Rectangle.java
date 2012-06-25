@@ -1,19 +1,19 @@
 package org.hettoo.vui;
 
 public class Rectangle {
-    private Size offset;
-    private Size size;
+    private Vector offset;
+    private Vector size;
 
-    public Rectangle(Size offset, Size size) {
+    public Rectangle(Vector offset, Vector size) {
         this.offset = offset;
         this.size = size;
     }
 
-    public Size getOffset() {
+    public Vector getOffset() {
         return offset;
     }
 
-    public Size getSize() {
+    public Vector getSize() {
         return size;
     }
 }

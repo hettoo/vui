@@ -1,17 +1,17 @@
 package org.hettoo.vui;
 
 public class VCanvas extends VAbstractComponent implements VDrawer {
-    private Size size;
+    private Vector size;
 
     public VCanvas() {
         super();
     }
 
-    public Size getSize() {
+    public Vector getSize() {
         return size;
     }
 
-    public void setSize(Size size) {
+    public void setSize(Vector size) {
         this.size = size;
     }
 
@@ -31,7 +31,7 @@ public class VCanvas extends VAbstractComponent implements VDrawer {
         parent.drawRectangle(rectangle);
     }
 
-    public void drawText(String text, Size position, FontStyle fontStyle) {
+    public void drawText(String text, Vector position, FontStyle fontStyle) {
         parent.drawText(text, position, fontStyle);
     }
 }
