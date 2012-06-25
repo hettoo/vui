@@ -16,6 +16,10 @@ public class VTheme {
         return new Color(0, 0, 0);
     }
 
+    public FontStyle getComponentFontStyle() {
+        return new FontStyle(FontType.PLAIN, 18, getComponentTextColor());
+    }
+
     public Color getStatusColor(VStatus status) {
         switch (status) {
             case BUSY:

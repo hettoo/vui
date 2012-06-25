@@ -38,14 +38,14 @@ public class VFrame {
         jFrame.addKeyListener(canvas);
         jFrame.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowActivated(WindowEvent event) {
+            public void windowOpened(WindowEvent event) {
+                jFrame.setLocationRelativeTo(null);
                 draw();
             }
         });
     }
 
     public void show() {
-        jFrame.setLocationRelativeTo(null);
         jFrame.setVisible(true);
     }
 

@@ -15,16 +15,20 @@ public class VGrid extends VAbstractComponent {
         components = new ArrayList<VLimitedComponent>();
     }
 
-    public void addComponent(VLimitedComponent component) {
+    public void addComponent(VLimitedComponent component, boolean activate) {
         Rectangle limit = component.getLimit();
         component.getComponent().setParent(new VSubDrawer(parent, size, limit));
         components.add(component);
-        if (components.size() == 1) {
+        if (activate || components.size() == 1) {
             setFocus(component);
             activeSquare = limit.getOffset();
         } else {
             component.getComponent().disactivate();
         }
+    }
+
+    public void addComponent(VLimitedComponent component) {
+        addComponent(component, false);
     }
 
     private void setFocus(VLimitedComponent component) {
