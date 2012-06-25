@@ -9,10 +9,13 @@ public class VCombobox<E> extends VAbstractComponent {
 
     private List<ItemListener<E>> listeners;
 
+    private boolean selecting;
+
     public VCombobox() {
         items = new ArrayList<E>();
         index = 0;
         listeners = new ArrayList<ItemListener<E>>();
+        selecting = false;
     }
 
     public void addItemListener(ItemListener<E> listener) {
@@ -68,6 +71,7 @@ public class VCombobox<E> extends VAbstractComponent {
                 draw();
             }
             frame.destroy();
+            selecting = false;
         }
     }
 
@@ -76,7 +80,7 @@ public class VCombobox<E> extends VAbstractComponent {
         super.keyPressed(key);
         if (items.isEmpty())
             return;
-        if (key.getKey().isActivator()) {
+        if (key.getKey().isActivator() && !selecting) {
             VFrame frame = new VFrame(new Vector(300, 80 * items.size()));
             frame.setTitle("Select an item");
             VGrid grid = new VGrid(new Vector(1, items.size()));
@@ -92,6 +96,7 @@ public class VCombobox<E> extends VAbstractComponent {
                 i++;
             }
             frame.show();
+            selecting = true;
         }
     }
 }
