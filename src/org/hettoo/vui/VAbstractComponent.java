@@ -1,8 +1,8 @@
 package org.hettoo.vui;
 
 public abstract class VAbstractComponent implements VComponent {
-    private static final int STATUS_MARGIN = 8;
-    protected static final int CONTENT_MARGIN = STATUS_MARGIN + 4;
+    private static final int STATUS_MARGIN = 5;
+    protected static final int CONTENT_MARGIN = STATUS_MARGIN + 2;
 
     protected VDrawer parent;
     protected VStatus status;
