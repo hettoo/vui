@@ -27,19 +27,7 @@ public class VButton extends VAbstractComponent {
     @Override
     public void draw() {
         super.draw();
-        Vector size = parent.getSize();
-        parent.drawRectangle(new VRectangle(new Rectangle(
-                        new Vector(CONTENT_MARGIN, CONTENT_MARGIN),
-                        new Vector(size.getX() - CONTENT_MARGIN * 2,
-                            size.getY() - CONTENT_MARGIN * 2)),
-                    parent.getTheme().getComponentColor()));
-        if (label != null) {
-            FontStyle style = parent.getTheme().getComponentFontStyle();
-            int textWidth = parent.getTextWidth(label, style);
-            int textHeight = parent.getTextHeight(style);
-            parent.drawText(label, new Vector((size.getX() - textWidth) / 2,
-                        (size.getY() + textHeight / 2) / 2), style);
-        }
+        parent.getTheme().drawButton(this);
     }
 
     @Override

@@ -28,28 +28,24 @@ public class VCombobox<E> extends VAbstractComponent {
         return items.get(index);
     }
 
+    public String getLabel() {
+        E item = getItem();
+        return item == null ? null : item.toString();
+    }
+
     public void addItem(E item) {
         items.add(item);
+    }
+
+    public void removeItem(E item) {
+        items.remove(item);
     }
 
     @Override
     public void draw() {
         super.draw();
-        Vector size = parent.getSize();
-        parent.drawRectangle(new VRectangle(new Rectangle(
-                        new Vector(CONTENT_MARGIN, CONTENT_MARGIN),
-                        new Vector(size.getX() - CONTENT_MARGIN * 2,
-                            size.getY() - CONTENT_MARGIN * 2)),
-                    parent.getTheme().getComponentColor()));
         E item = getItem();
-        if (item != null) {
-            FontStyle style = parent.getTheme().getComponentFontStyle();
-            int textWidth = parent.getTextWidth(item.toString(), style);
-            int textHeight = parent.getTextHeight(style);
-            parent.drawText(item.toString(),
-                    new Vector(textHeight,
-                        (size.getY() + textHeight / 2) / 2), style);
-        }
+        parent.getTheme().drawCombobox(this);
     }
     
     private class ItemSelector implements ActionListener {
