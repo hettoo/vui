@@ -202,6 +202,10 @@ public class VFrame {
                 component.draw();
         }
 
+        public void redraw() {
+            draw();
+        }
+
         private void show() {
             graphics.dispose();
             strategy.show();

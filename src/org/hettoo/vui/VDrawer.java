@@ -9,4 +9,5 @@ public interface VDrawer extends VComponent {
 
     public void drawRectangle(VRectangle rectangle);
     public void drawText(String text, Vector position, FontStyle fontStyle);
+    public void redraw();
 }

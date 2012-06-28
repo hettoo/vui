@@ -33,6 +33,14 @@ public class VSubDrawer implements VDrawer {
         drawer.drawText(text, position, fontStyle);
     }
 
+    public void redraw() {
+        Vector size = getSize();
+        drawRectangle(new VRectangle(new Rectangle(new Vector(0, 0),
+                        new Vector(size.getX(), size.getY())),
+                    getTheme().getRootColor()));
+        //drawer.redraw();
+    }
+
     public void draw() {
         drawer.draw();
     }

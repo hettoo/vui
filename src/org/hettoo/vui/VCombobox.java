@@ -47,7 +47,7 @@ public class VCombobox<E> extends VAbstractComponent {
         E item = getItem();
         parent.getTheme().drawCombobox(this);
     }
-    
+
     private class ItemSelector implements ActionListener {
         private int i;
         private E item;

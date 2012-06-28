@@ -2,8 +2,8 @@ package org.hettoo.vui;
 
 public class Test {
     public static void main(String[] args) {
-        VFrame frame = new VFrame(new Vector(400, 300));
-        VGrid grid = new VGrid(new Vector(2, 3));
+        VFrame frame = new VFrame(new Vector(400, 400));
+        VGrid grid = new VGrid(new Vector(2, 4));
         frame.setComponent(grid);
         VButton button1 = new VButton();
         button1.addActionListener(new ActionListener() {
@@ -27,6 +27,10 @@ public class Test {
         box.addItem("item2");
         grid.addComponent(new VLimitedComponent(box,
                     new Rectangle(new Vector(0, 2), new Vector(2, 1))));
+        VLabel label = new VLabel();
+        label.setLabel("testlabel");
+        grid.addComponent(new VLimitedComponent(label,
+                    new Rectangle(new Vector(0, 3), new Vector(2, 1))));
         frame.show();
     }
 }

@@ -16,8 +16,16 @@ public class VTheme {
         return new Color(0.94f, 0.94f, 0.72f);
     }
 
+    public Color getTextColor() {
+        return new Color(1, 1, 1);
+    }
+
     public Color getComponentTextColor() {
         return new Color(0, 0, 0);
+    }
+
+    public FontStyle getFontStyle() {
+        return new FontStyle(FontType.PLAIN, 18, getTextColor());
     }
 
     public FontStyle getComponentFontStyle() {
@@ -92,5 +100,16 @@ public class VTheme {
             drawer.drawText(item, new Vector(NORMAL_MARGIN,
                         (size.getY() + textHeight / 2) / 2), style);
         }
+    }
+
+    public void drawLabel(VLabel label) {
+        VDrawer drawer = label.getParent();
+        Vector size = drawer.getSize();
+        String item = label.getLabel();
+        FontStyle style = getFontStyle();
+        int textWidth = drawer.getTextWidth(item, style);
+        int textHeight = drawer.getTextHeight(style);
+        drawer.drawText(item, new Vector(NORMAL_MARGIN,
+                    (size.getY() + textHeight / 2) / 2), style);
     }
 }
