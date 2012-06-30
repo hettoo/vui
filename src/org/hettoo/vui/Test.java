@@ -30,7 +30,18 @@ public class Test {
         VLabel label = new VLabel();
         label.setLabel("testlabel");
         grid.addComponent(new VLimitedComponent(label,
-                    new Rectangle(new Vector(0, 3), new Vector(2, 1))));
+                    new Rectangle(new Vector(0, 3), new Vector(1, 1))));
+        VGrid subGrid = new VGrid(new Vector(2, 1));
+        grid.addComponent(new VLimitedComponent(subGrid,
+                    new Rectangle(new Vector(1, 3), new Vector(1, 1))));
+        VLabel a = new VLabel();
+        a.setLabel("a");
+        subGrid.addComponent(new VLimitedComponent(a,
+                    new Rectangle(new Vector(0, 0), new Vector(1, 1))));
+        VLabel b = new VLabel();
+        b.setLabel("b");
+        subGrid.addComponent(new VLimitedComponent(b,
+                    new Rectangle(new Vector(1, 0), new Vector(1, 1))));
         frame.show();
     }
 }

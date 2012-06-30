@@ -142,8 +142,9 @@ public class VFrame {
 
         public void setComponent(VComponent component) {
             this.component = component;
+            component.setRoot();
             component.setParent(this);
-            component.activate();
+            component.setStatus(VStatus.OVERACTIVE);
         }
 
         public VTheme getTheme() {
@@ -229,25 +230,25 @@ public class VFrame {
         public void keyTyped(KeyEvent event) {
         }
 
-        public void keyPressed(KeyPress key) {
+        public boolean keyPressed(KeyPress key) {
             switch (key.getKey()) {
                 case VK_ESCAPE:
                     destroy();
-                    return;
+                    return true;
             }
             if (component == null)
-                return;
-            component.keyPressed(key);
+                return false;
+            return component.keyPressed(key);
         }
 
         public VStatus getStatus() {
             return null;
         }
 
-        public void activate() {
+        public void setStatus(VStatus status) {
         }
 
-        public void disactivate() {
+        public void setRoot() {
         }
 
         public void setParent(VDrawer parent) {

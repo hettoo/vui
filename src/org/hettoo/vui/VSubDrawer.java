@@ -45,12 +45,8 @@ public class VSubDrawer implements VDrawer {
         drawer.draw();
     }
 
-    public void activate() {
-        drawer.activate();
-    }
-
-    public void disactivate() {
-        drawer.disactivate();
+    public void setStatus(VStatus status) {
+        drawer.setStatus(status);
     }
 
     public VTheme getTheme() {
@@ -59,6 +55,10 @@ public class VSubDrawer implements VDrawer {
 
     public VStatus getStatus() {
         return drawer.getStatus();
+    }
+
+    public void setRoot() {
+        drawer.setRoot();
     }
 
     public VDrawer getParent() {
@@ -73,7 +73,7 @@ public class VSubDrawer implements VDrawer {
         return drawer.getSize().limit(grid, limit.getSize());
     }
 
-    public void keyPressed(KeyPress key) {
-        drawer.keyPressed(key);
+    public boolean keyPressed(KeyPress key) {
+        return drawer.keyPressed(key);
     }
 }

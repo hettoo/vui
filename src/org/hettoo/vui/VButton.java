@@ -31,11 +31,14 @@ public class VButton extends VAbstractComponent {
     }
 
     @Override
-    public void keyPressed(KeyPress key) {
-        super.keyPressed(key);
+    public boolean keyPressed(KeyPress key) {
+        if (super.keyPressed(key))
+            return true;
         if (key.getKey().isActivator()) {
             for (ActionListener listener : listeners)
                 listener.action();
+            return true;
         }
+        return false;
     }
 }

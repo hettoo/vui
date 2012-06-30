@@ -3,8 +3,14 @@ package org.hettoo.vui;
 public abstract class VAbstractComponent implements VComponent {
     protected VDrawer parent;
     protected VStatus status;
+    protected boolean isRoot;
 
     public VAbstractComponent() {
+        isRoot = false;
+    }
+
+    public void setRoot() {
+        isRoot = true;
     }
 
     public VDrawer getParent() {
@@ -15,15 +21,7 @@ public abstract class VAbstractComponent implements VComponent {
         this.parent = parent;
     }
 
-    public void activate() {
-        setStatus(VStatus.ACTIVE);
-    }
-
-    public void disactivate() {
-        setStatus(VStatus.INACTIVE);
-    }
-
-    protected void setStatus(VStatus status) {
+    public void setStatus(VStatus status) {
         this.status = status;
         draw();
     }
@@ -37,9 +35,20 @@ public abstract class VAbstractComponent implements VComponent {
     }
 
     public void draw() {
-        parent.getTheme().drawStatus(this);
+        if (!isRoot)
+            parent.getTheme().drawStatus(this);
     }
 
-    public void keyPressed(KeyPress key) {
+    public boolean keyPressed(KeyPress key) {
+        boolean handled = false;
+        switch (key.getKey()) {
+            case VK_OPEN_BRACKET:
+                if (!isRoot && key.getModifiers().contains(Key.VK_CONTROL)) {
+                    setStatus(VStatus.ACTIVE);
+                    handled = true;
+                }
+                break;
+        }
+        return handled;
     }
 }

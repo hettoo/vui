@@ -72,10 +72,11 @@ public class VCombobox<E> extends VAbstractComponent {
     }
 
     @Override
-    public void keyPressed(KeyPress key) {
-        super.keyPressed(key);
+    public boolean keyPressed(KeyPress key) {
+        if (super.keyPressed(key))
+            return true;
         if (items.isEmpty())
-            return;
+            return false;
         if (key.getKey().isActivator() && !selecting) {
             VFrame frame = new VFrame(new Vector(300, 80 * items.size())) {
                 @Override
@@ -99,6 +100,8 @@ public class VCombobox<E> extends VAbstractComponent {
             }
             frame.show();
             selecting = true;
+            return true;
         }
+        return false;
     }
 }
