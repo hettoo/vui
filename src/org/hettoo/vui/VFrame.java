@@ -165,13 +165,20 @@ public class VFrame {
             return graphics.getFontMetrics(createFont(fontStyle)).getHeight();
         }
 
-        public void drawRectangle(VRectangle rectangle) {
-            setColor(rectangle.getColor());
-            Rectangle rect = rectangle.getRectangle();
-            Vector offset = rect.getOffset();
-            Vector size = rect.getSize();
-            graphics.fillRect(offset.getX(), offset.getY(),
-                    size.getX(), size.getY());
+        public void drawPolygon(VPolygon polygon) {
+            setColor(polygon.getColor());
+            Polygon poly = polygon.getPolygon();
+            Vector[] points = poly.getPoints();
+            int[] xPoints = new int[points.length];
+            int[] yPoints = new int[points.length];
+            for (int i = 0; i < points.length; i++) {
+                xPoints[i] = points[i].getX();
+                yPoints[i] = points[i].getY();
+            }
+            if (polygon.mustFill())
+                graphics.fillPolygon(xPoints, yPoints, points.length);
+            else
+                graphics.drawPolygon(xPoints, yPoints, points.length);
         }
 
         private int convertFontStyle(FontType style) {
@@ -196,7 +203,7 @@ public class VFrame {
         }
 
         public void draw() {
-            drawRectangle(new VRectangle(new Rectangle(new Vector(0, 0),
+            drawPolygon(new VPolygon(new Rectangle(new Vector(0, 0),
                             new Vector(canvas.getWidth(), canvas.getHeight())),
                         theme.getRootColor()));
             if (component != null)

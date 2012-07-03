@@ -50,17 +50,17 @@ public class VTheme {
         VDrawer drawer = component.getParent();
         Vector size = drawer.getSize();
         Color statusColor = getStatusColor(component.getStatus());
-        drawer.drawRectangle(new VRectangle(new Rectangle(new Vector(0, 0),
+        drawer.drawPolygon(new VPolygon(new Rectangle(new Vector(0, 0),
                         new Vector(STATUS_MARGIN, size.getY())),
                     statusColor));
-        drawer.drawRectangle(new VRectangle(new Rectangle(
+        drawer.drawPolygon(new VPolygon(new Rectangle(
                         new Vector(size.getX() - STATUS_MARGIN, 0),
                         new Vector(STATUS_MARGIN, size.getY())),
                     statusColor));
-        drawer.drawRectangle(new VRectangle(new Rectangle(new Vector(0, 0),
+        drawer.drawPolygon(new VPolygon(new Rectangle(new Vector(0, 0),
                         new Vector(size.getX(), STATUS_MARGIN)),
                     statusColor));
-        drawer.drawRectangle(new VRectangle(new Rectangle(
+        drawer.drawPolygon(new VPolygon(new Rectangle(
                         new Vector(0, size.getY() - STATUS_MARGIN),
                         new Vector(size.getX(), STATUS_MARGIN)),
                     statusColor));
@@ -69,7 +69,7 @@ public class VTheme {
     public void drawButton(VButton button) {
         VDrawer drawer = button.getParent();
         Vector size = drawer.getSize();
-        drawer.drawRectangle(new VRectangle(new Rectangle(
+        drawer.drawPolygon(new VPolygon(new Rectangle(
                         new Vector(CONTENT_MARGIN, CONTENT_MARGIN),
                         new Vector(size.getX() - CONTENT_MARGIN * 2,
                             size.getY() - CONTENT_MARGIN * 2)),
@@ -87,7 +87,7 @@ public class VTheme {
     public void drawCombobox(VCombobox combobox) {
         VDrawer drawer = combobox.getParent();
         Vector size = drawer.getSize();
-        drawer.drawRectangle(new VRectangle(new Rectangle(
+        drawer.drawPolygon(new VPolygon(new Rectangle(
                         new Vector(CONTENT_MARGIN, CONTENT_MARGIN),
                         new Vector(size.getX() - CONTENT_MARGIN * 2,
                             size.getY() - CONTENT_MARGIN * 2)),

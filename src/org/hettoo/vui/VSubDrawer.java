@@ -19,12 +19,13 @@ public class VSubDrawer implements VDrawer {
         return drawer.getTextHeight(fontStyle);
     }
 
-    public void drawRectangle(VRectangle rectangle) {
-        Rectangle rect = rectangle.getRectangle();
-        Vector offset = rect.getOffset();
-        offset = offset.add(drawer.getSize().limit(grid, limit.getOffset()));
-        rectangle.setRectangle(new Rectangle(offset, rect.getSize()));
-        drawer.drawRectangle(rectangle);
+    public void drawPolygon(VPolygon polygon) {
+        Vector[] points = polygon.getPolygon().getPoints();
+        for (int i = 0; i < points.length; i++)
+            points[i] = points[i].add(drawer.getSize().limit(grid,
+                        limit.getOffset()));
+        polygon.setPolygon(new Polygon(points));
+        drawer.drawPolygon(polygon);
     }
 
     public void drawText(String text, Vector position, FontStyle fontStyle) {
@@ -35,10 +36,10 @@ public class VSubDrawer implements VDrawer {
 
     public void redraw() {
         Vector size = getSize();
-        drawRectangle(new VRectangle(new Rectangle(new Vector(0, 0),
+        // FIXME: this depends on the drawer drawing only the root color.
+        drawPolygon(new VPolygon(new Rectangle(new Vector(0, 0),
                         new Vector(size.getX(), size.getY())),
                     getTheme().getRootColor()));
-        //drawer.redraw();
     }
 
     public void draw() {
