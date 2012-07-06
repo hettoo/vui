@@ -18,4 +18,9 @@ public class KeyPress {
     public List<Key> getModifiers() {
         return modifiers;
     }
+
+    public boolean isEscaper() {
+        return getKey() == Key.VK_OPEN_BRACKET
+            && getModifiers().contains(Key.VK_CONTROL);
+    }
 }

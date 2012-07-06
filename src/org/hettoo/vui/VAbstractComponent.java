@@ -41,13 +41,9 @@ public abstract class VAbstractComponent implements VComponent {
 
     public boolean keyPressed(KeyPress key) {
         boolean handled = false;
-        switch (key.getKey()) {
-            case VK_OPEN_BRACKET:
-                if (!isRoot && key.getModifiers().contains(Key.VK_CONTROL)) {
-                    setStatus(VStatus.ACTIVE);
-                    handled = true;
-                }
-                break;
+        if (key.isEscaper() && !isRoot) {
+            setStatus(VStatus.ACTIVE);
+            handled = true;
         }
         return handled;
     }

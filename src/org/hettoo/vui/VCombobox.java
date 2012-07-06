@@ -78,7 +78,8 @@ public class VCombobox<E> extends VAbstractComponent {
         if (items.isEmpty())
             return false;
         if (key.getKey().isActivator() && !selecting) {
-            VFrame frame = new VFrame(new Vector(300, 80 * items.size())) {
+            final VFrame frame
+                = new VFrame(new Vector(300, 80 * items.size())) {
                 @Override
                 public void destroy() {
                     super.destroy();
@@ -86,7 +87,16 @@ public class VCombobox<E> extends VAbstractComponent {
                 }
             };
             frame.setTitle("Select an item");
-            VGrid grid = new VGrid(new Vector(1, items.size()));
+            VGrid grid = new VGrid(new Vector(1, items.size())) {
+                @Override
+                public boolean keyPressed(KeyPress keyPress) {
+                    if (keyPress.isEscaper()) {
+                        frame.destroy();
+                        return true;
+                    }
+                    return super.keyPressed(keyPress);
+                }
+            };
             frame.setComponent(grid);
             int i = 0;
             for (E item : items) {
